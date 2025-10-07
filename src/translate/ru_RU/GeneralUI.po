@@ -1,0 +1,106 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgid "All our publications are available without a paywall."
+msgstr "Все наши публикации доступны без «пейвола»."
+
+msgid "Open Letter to President Donald J. Trump, Members of Congress, and the American People"
+msgstr "Открытое письмо Президенту США Дональду Трампу, членам Конгресса и народу Америки"
+
+msgid "to President Donald J. Trump, Members of Congress, and the American People"
+msgstr "Президенту США Дональду Трампу, членам Конгресса и народу Америки"
+
+msgid "The system, regrettably, does not distinguish carefully between threats and allies, and this leads to tragedies that could have been avoided."
+msgstr "Механизм отбора, к сожалению, работает неизбирательно, и это приводит к трагедиям, которых можно было избежать."
+
+msgid "We are allies of the United States in the global fight for freedom and democracy."
+msgstr "Мы — союзники Америки в борьбе за свободу и демократию во всём мире."
+
+msgid "In effect, the United States delivered Leonid directly into the hands of political repression."
+msgstr "Фактически США выдали России Леонида для политических репрессий."
+
+msgid "Our Plea and Our Hope"
+msgstr "Наши просьбы и надежда"
+
+msgid "Full Name:"
+msgstr "Ваше имя:"
+
+msgid "Subscribe"
+msgstr "Подписывайтесь"
+
+msgid "Investigative journalism."
+msgstr "Журналисткое расследование."
+
+msgid "Investigative journalism"
+msgstr "Журналисткое расследование"
+
+msgid "Since the start of Russia’s full-scale invasion of Ukraine in 2022 — and the subsequent escalation of domestic repression — hundreds of Russian activists, human rights defenders, and military draft resisters have fled the country in search of asylum in the United States."
+msgstr "С начала полномасштабного вторжения России на Украину в 2022 году и последовавшей эскалации внутренних репрессий сотни российских активистов, правозащитников и участников сопротивления призыву в армию покинули страну в поисках убежища в Соединенных Штатах."
+
+msgid "God bless America."
+msgstr "Боже, храни Америку."
+
+msgid "Preserve the America that gave hope to the oppressed."
+msgstr "Сохраните ту Америку, которая давала надежду угнетённым."
+
+msgid "We appeal to you: do not hand us over to our persecutors."
+msgstr "Мы призываем вас: не отдавайте нас палачам."
+
+msgid "He has stated clearly: “I cannot return to Russia, I face not freedom there, but prison or the front line”."
+msgstr "Он открыто заявил: «Я не могу вернуться в Россию. Меня там ждёт не свобода, а тюрьма или фронт.»"
+
+msgid "And that is why we must call your attention to a number of cases that have already resulted in tragedy — or pose a very real and immediate threat:"
+msgstr "И именно потому мы считаем необходимым привлечь внимание к фактам, которые уже обернулись трагедией или представляют серьёзную угрозу:"
+
+msgid "Full name:"
+msgstr "Полное имя:"
+
+msgid "Telegram"
+msgstr "Телеграм"
+
+msgid "Social Media"
+msgstr "Соцсети"
+
+msgid "Support us"
+msgstr "Поддержать"
+
+msgid "Read all publications"
+msgstr "Читать все публикации"
+
+msgid "One-time"
+msgstr "Разово"
+
+msgid "CTO"
+msgstr "Технический директор"
+
+msgid "Special Projects and Investigations"
+msgstr "Спецпроекты и расследования"
+
+msgid "Special Projects"
+msgstr "Спецпроекты"
+
+msgid "Special projects"
+msgstr "Спецпроекты"
+
+msgid "Important"
+msgstr "Важно"
+
+msgid "Journalist"
+msgstr "Журналист"
+
+msgid "Art critic"
+msgstr "Арт-критик"
+
+msgid "art critic"
+msgstr "арт-критик"
+
+msgid "Our articles are freely accessible because we believe in you."
+msgstr "Наши тексты в открытом доступе, потому что мы верим в вас."
+
+msgid "30 Latest posts:"
+msgstr "30 Последних публикаций:"
+
+msgid "Latest posts:"
+msgstr "Последние публикации:"
