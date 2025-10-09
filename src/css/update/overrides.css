@@ -1,0 +1,72 @@
+/* -------------------------------------------------------------------------- */
+/* #region: HEADER                                                            */
+/* -------------------------------------------------------------------------- */
+
+/* Remove the strut */
+div:empty[style*='height:80px;'] {
+  display: none !important;
+}
+
+body {
+  padding-top: 80px;
+}
+
+/* #endregion */
+
+/* -------------------------------------------------------------------------- */
+/* #region: HEADER                                                            */
+/* -------------------------------------------------------------------------- */
+
+.logo {
+  all: revert;
+}
+
+.site-header-link {
+  &:hover, &:focus {
+    background: transparent;
+    text-decoration: none;
+  }
+
+  &.is-active {
+    background: transparent;
+    color: var(--color-text);
+
+    .navigation-hover {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  }
+}
+
+.site-header-cta {
+  &, &:hover, &:focus {
+    background: transparent;
+    text-decoration: none;
+  }
+  @media only screen and (min-width: 768px) and (min-height: 341px) {
+    display: none;
+  }
+
+  @media only screen and (min-width: 1200px) and (min-height: 341px) {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .nav-menu {
+    margin-top: 0;
+    padding-top: var(--size-6);
+  }
+}
+
+/* #endregion */
+
+.maincontainer {
+  margin-inline: auto;
+}
+
+.site-header-actions {
+  @media only screen and (min-width: 991px) and (min-height: 341px) {
+    display: none;
+  }
+}

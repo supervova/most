@@ -1,0 +1,316 @@
+{% set nav = site.navigation %}
+{% set search_examples = site.search.examples %}
+{% set language_code = lng_html|default('ru')|lower|replace({'-': '_'})|split('_')|first %}
+{% if language_code not in ['ru', 'en', 'es', 'de', 'fr', 'it', 'pt'] %}
+  {% set language_code = 'ru' %}
+{% endif %}
+{% set search_template_localized = site.search.results_page|replace({'{lang}': language_code}) %}
+{% set search_action = search_template_localized|replace({'/{query}': '', '{query}': ''}) %}
+
+<div id="p_prldr">
+  <div class="contpre">
+     <img
+       src="{{ asset(site.project_prefix ~ '/images/logo-square.png', site.assets_prefix) }}"
+       style="width:81px;height:81px;border-radius:50%"
+       class="spinner"
+       alt=""
+     />
+     <br />
+     <small>loading...</small>
+  </div>
+</div>
+<script type="text/javascript">
+(function () {
+  const preloader = document.getElementById('p_prldr');
+  const getOverlay = () => document.getElementById('w-nav-overlay-0');
+  const getMenu = () => document.querySelector('[data-nav-menu-open]');
+  const getSandwichButton = () => document.getElementById('sandwichbutton');
+  const getNavOverlayForm = () => document.querySelector('.nav-overlay-form');
+
+  const hidePreloader = () => {
+    if (!preloader || preloader.style.display === 'none') {
+      return;
+    }
+    preloader.style.opacity = '0';
+    setTimeout(() => {
+      preloader.style.display = 'none';
+    }, 300);
+  };
+
+  const showOverlay = () => {
+    const overlay = getOverlay();
+    if (overlay) {
+      overlay.style.display = 'block';
+    }
+    document.body.style.overflow = 'hidden';
+  };
+
+  const hideOverlay = () => {
+    const overlay = getOverlay();
+    if (overlay) {
+      overlay.style.display = 'none';
+    }
+    document.body.style.overflow = '';
+  };
+
+  window.sandwich = function (act) {
+    const menu = getMenu();
+    if (!menu) {
+      return;
+    }
+
+    if (typeof act === 'undefined') {
+      const isHidden = getComputedStyle(menu).display === 'none';
+      if (isHidden) {
+        menu.style.setProperty('display', 'block', 'important');
+        showOverlay();
+      } else {
+        menu.style.setProperty('display', 'none', 'important');
+        hideOverlay();
+      }
+    } else if (act === 'close') {
+      menu.style.setProperty('display', 'none', 'important');
+      hideOverlay();
+    }
+  };
+
+  const handleOutsideClick = (event) => {
+    const menu = getMenu();
+    const target = event.target;
+    if (!menu) {
+      return;
+    }
+    const sandwichButton = getSandwichButton();
+    const navOverlayForm = getNavOverlayForm();
+    if (
+      !menu.contains(target) &&
+      !(navOverlayForm && navOverlayForm.contains(target)) &&
+      !(sandwichButton && sandwichButton.contains(target))
+    ) {
+      window.sandwich('close');
+    }
+  };
+
+  const onLoad = () => {
+    hideOverlay();
+    hidePreloader();
+
+    const bgVideo = document.getElementById('bgvideo');
+    if (bgVideo) {
+      const loadSrc = bgVideo.getAttribute('loadsrc');
+      if (loadSrc) {
+        bgVideo.src = loadSrc;
+      }
+    }
+
+    document.addEventListener('click', handleOutsideClick);
+    window.addEventListener('resize', () => window.sandwich('close'));
+  };
+
+  window.setTimeout(hidePreloader, 4500);
+
+  if (document.readyState === 'complete') {
+    onLoad();
+  } else {
+    window.addEventListener('load', onLoad);
+  }
+})();
+</script>
+
+{{ antiframe|raw }}
+{{ pushstatejs|raw }}
+<div style="height:80px;"></div>
+
+<div
+  data-collapse="medium"
+  data-animation="default"
+  data-duration="400"
+  data-easing="ease"
+  data-easing2="ease"
+  role="banner"
+  class="navigation w-nav site-header"
+>
+  <div class="navigation-container site-header-inner">
+    <a href="{{ site.home_url }}" class="logo w-inline-block site-header-logo">
+      <img
+        class="image-logo site-header-logo-image"
+        src="{{ asset(site.logo.path, site.assets_prefix) }}"
+        width="{{ site.logo.width }}"
+        height="{{ site.logo.height }}"
+        alt="{{ site.logo.alt }}"
+      />
+    </a>
+    <nav role="navigation" class="nav-menu w-nav-menu site-header-nav">
+      <a href="{{ nav[0].url }}" class="navigation-link w-inline-block {{ nav[0].class }}">
+        <div class="navigation-link-text">{{ nav[0].label }}</div>
+        <div class="navigation-hover"></div>
+      </a>
+      <a href="{{ nav[1].url }}" class="navigation-link w-inline-block {{ nav[1].class }}">
+        <div class="navigation-link-text">{{ nav[1].label }}</div>
+        <div class="navigation-hover"></div>
+      </a>
+      <a href="{{ nav[2].url }}" class="navigation-link w-inline-block {{ nav[2].class }}">
+        <div class="navigation-link-text">{{ nav[2].label }}</div>
+        <div class="navigation-hover"></div>
+      </a>
+      <a href="{{ nav[3].url }}" class="navigation-link w-inline-block {{ nav[3].class }}">
+        <div class="navigation-link-text">{{ nav[3].label }}</div>
+        <div class="navigation-hover"></div>
+      </a>
+      <a href="{{ nav[4].url }}" class="navigation-link w-inline-block {{ nav[4].class }}">
+        <div class="navigation-link-text">{{ nav[4].label }}</div>
+        <div class="navigation-hover"></div>
+      </a>
+
+      <button
+        class="button button-icon button-ghost site-header-search"
+        data-search-toggle
+        aria-haspopup="dialog"
+        aria-controls="search-modal"
+        aria-expanded="false"
+        aria-label="{{ site.search.label }}"
+      >
+        <svg class="icon" aria-hidden="true" focusable="false">
+          <use xlink:href="{{ asset(site.project_prefix ~ '/icons/sprite.svg#icon-search', site.assets_prefix) }}"></use>
+        </svg>
+      </button>
+
+      <a href="{{ site.cta.url }}" class="navigation-link-subscribe w-inline-block site-header-cta">
+        <div class="navigation-link-text-subscribe visible-lg">{{ site.cta.label }}</div>
+      </a>
+    </nav>
+    <div class="navigation-actions site-header-actions">
+      <div id="sandwichbutton" class="menu-button w-nav-button" onclick="sandwich()">
+        <div class="icon-200 w-icon-nav-menu"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="w-nav-overlay" data-wf-ignore id="w-nav-overlay-0" style="height: 100%; display: none;">
+
+  <form
+    class="nav-overlay-form"
+    data-search-form
+    role="search"
+    method="get"
+    action="{{ search_action }}"
+  >
+    <input
+      class="nav-overlay-input"
+      name="{{ site.search.param }}"
+      type="search"
+      data-search-input
+      placeholder="{{ site.search.placeholder }}"
+      autocomplete="off"
+    />
+    <button class="nav-overlay-submit button button-icon button-ghost" type="submit" aria-label="{{ site.search.submit_label }}">
+      <svg class="icon" aria-hidden="true" focusable="false">
+        <use xlink:href="{{ asset(site.project_prefix ~ '/icons/sprite.svg#icon-search', site.assets_prefix) }}"></use>
+      </svg>
+    </button>
+  </form>
+
+  <nav
+    role="navigation"
+    class="nav-menu w-nav-menu"
+    style="transition: all, transform 400ms; transform: translateY(0px) translateX(0px);"
+    data-nav-menu-open=""
+  >
+    <a href="{{ nav[0].url }}" class="navigation-link w-inline-block"><div class="navigation-link-text">{{ nav[0].label }}</div></a>
+    <a href="{{ nav[1].url }}" class="navigation-link w-inline-block"><div class="navigation-link-text">{{ nav[1].label }}</div></a>
+    <a href="{{ nav[2].url }}" class="navigation-link w-inline-block"><div class="navigation-link-text">{{ nav[2].label }}</div></a>
+    <a href="{{ nav[3].url }}" class="navigation-link w-inline-block"><div class="navigation-link-text">{{ nav[3].label }}</div></a>
+    <a href="{{ nav[4].url }}" class="navigation-link w-inline-block"><div class="navigation-link-text">{{ nav[4].label }}</div></a>
+    <a href="{{ nav[5].url }}" class="navigation-link w-inline-block"><div class="navigation-link-text">{{ nav[5].label }}</div></a>
+    <a href="{{ site.cta.url }}" class="navigation-link-subscribe w-inline-block"><div class="navigation-link-text-subscribe">{{ site.cta.label }}</div></a>
+  </nav>
+</div>
+
+<section
+  class="search-modal"
+  id="search-modal"
+  data-search-modal
+  data-search-results="{{ site.search.results_page }}"
+  data-search-param="{{ site.search.param }}"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="search-modal-title"
+  aria-hidden="true"
+>
+  <div class="search-modal-backdrop" data-search-dismiss></div>
+  <div class="search-modal-content" role="document">
+      <form
+        class="search-modal-form"
+        data-search-form
+        role="search"
+        method="get"
+        action="{{ search_action }}"
+      >
+      <label class="visually-hidden" for="search-query">
+        {{ site.search.input_label }}
+      </label>
+      <input
+        class="search-modal-input"
+        id="search-query"
+        name="{{ site.search.param }}"
+        type="search"
+        data-search-input
+        placeholder="{{ site.search.placeholder }}"
+        autocomplete="off"
+      />
+      <button class="button button-icon button-ghost search-modal-submit" type="submit" aria-label="{{ site.search.submit_label }}">
+        <svg class="icon" aria-hidden="true" focusable="false">
+          <use xlink:href="{{ asset(site.project_prefix ~ '/icons/sprite.svg#icon-search', site.assets_prefix) }}"></use>
+        </svg>
+      </button>
+    </form>
+
+    <ul class="search-modal-suggestions" aria-label="{{ site.search.examples_title }}">
+      <li>
+        <a
+          class="button search-modal-suggestion"
+          href="{{ search_examples[0].href }}"
+        >
+          <svg class="icon icon-sm" aria-hidden="true" focusable="false">
+            <use xlink:href="{{ asset(site.project_prefix ~ '/icons/sprite.svg#icon-sm-search', site.assets_prefix) }}"></use>
+          </svg>
+          {{ search_examples[0].q }}
+        </a>
+      </li>
+      <li>
+        <a
+          class="button search-modal-suggestion"
+          href="{{ search_examples[1].href }}"
+        >
+          <svg class="icon icon-sm" aria-hidden="true" focusable="false">
+            <use xlink:href="{{ asset(site.project_prefix ~ '/icons/sprite.svg#icon-sm-search', site.assets_prefix) }}"></use>
+          </svg>
+          {{ search_examples[1].q }}
+        </a>
+      </li>
+      <li>
+        <a
+          class="button search-modal-suggestion"
+          href="{{ search_examples[2].href }}"
+        >
+          <svg class="icon icon-sm" aria-hidden="true" focusable="false">
+            <use xlink:href="{{ asset(site.project_prefix ~ '/icons/sprite.svg#icon-sm-search', site.assets_prefix) }}"></use>
+          </svg>
+          {{ search_examples[2].q }}
+        </a>
+      </li>
+      <li>
+        <a
+          class="button search-modal-suggestion"
+          href="{{ search_examples[3].href }}"
+        >
+          <svg class="icon icon-sm" aria-hidden="true" focusable="false">
+            <use xlink:href="{{ asset(site.project_prefix ~ '/icons/sprite.svg#icon-sm-search', site.assets_prefix) }}"></use>
+          </svg>
+          {{ search_examples[3].q }}
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>

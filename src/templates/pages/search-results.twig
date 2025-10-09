@@ -1,0 +1,191 @@
+{% extends 'partials/base.twig' %}
+
+{% set header %}{% include 'partials/header.twig' %}{% endset %}
+{% set footer %}{% include 'partials/footer.twig' %}{% endset %}
+{% set loginform = '' %}
+{% set cookiesalert = '' %}
+{% set head_extra = '' %}
+{% set body_extra = '' %}
+{% set foot_extra = '' %}
+
+{% set top = content.top_post %}
+{% set banners = content.banners %}
+{% set latest = content.latest_posts %}
+{% set latest_link = content.latest_posts_link %}
+
+{% block content %}
+
+  <form
+    class="search-results-form"
+    data-search-form
+    role="search"
+    method="get"
+    action="{{ search_action }}"
+  >
+    <input
+      class="search-results-input"
+      name="{{ site.search.param }}"
+      type="search"
+      data-search-input
+      placeholder="{{ site.search.placeholder }}"
+      autocomplete="off"
+    />
+    <button class="search-results-submit button button-icon button-ghost" type="submit" aria-label="{{ site.search.submit_label }}">
+      <svg class="icon" aria-hidden="true" focusable="false">
+        <use xlink:href="{{ asset(site.project_prefix ~ '/icons/sprite.svg#icon-search', site.assets_prefix) }}"></use>
+      </svg>
+    </button>
+  </form>
+
+  <div class="top-post">
+    <div class="container">
+      <div class="posts-wrapper cc-top-post">
+        <div class="w-dyn-list">
+          <div role="list" class="w-dyn-items">
+            <div role="listitem" class="top-post-item w-dyn-item">
+              <a href="{{ top.url }}" class="top-post-image w-inline-block">
+                <img
+                  loading="lazy"
+                  src="{{ asset(top.image, site.assets_prefix) }}"
+                  alt="{{ top.image_alt }}"
+                  class="post-image"
+                />
+              </a>
+              <div class="top-post-text">
+                <a href="{{ top.url }}" class="top-post-link-block w-inline-block">
+                  <h2 class="h2">{{ top.title }}</h2>
+                </a>
+                <div class="post-short-text">{{ top.excerpt }}</div>
+                <div class="post-author-text">
+                  <div class="post-author cc-top-margin">Автор:</div>
+                  <a href="{{ top.author_url }}" class="post-author">{{ top.author_name }}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="{{ banners[0].container_class }}">
+    <a href="{{ banners[0].url }}" class="{{ banners[0].link_class }}" style="{{ banners[0].link_style }}">
+      <div class="left-column">
+        <img
+          loading="lazy"
+          src="{{ asset(banners[0].image, site.assets_prefix) }}"
+          alt="{{ banners[0].image_alt }}"
+        />
+      </div>
+      <div class="right-column" style="padding: 30px">
+        <div class="text-blanner-1">{{ banners[0].title }}</div>
+        <div class="text-blanner-2">{{ banners[0].subtitle }}</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="{{ banners[1].container_class }}">
+    <a href="{{ banners[1].url }}" class="{{ banners[1].link_class }}">
+      <div class="left-column">
+        <img
+          loading="lazy"
+          src="{{ asset(banners[1].image, site.assets_prefix) }}"
+          alt="{{ banners[1].image_alt }}"
+        />
+      </div>
+      <div class="right-column" style="padding: 30px">
+        <div class="text-blanner-1">{{ banners[1].title }}</div>
+        <div class="text-blanner-2">{{ banners[1].subtitle }}</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="latest-posts">
+    <div class="container">
+      <div class="section-title-text">Новые публикации</div>
+      <div class="posts-wrapper">
+        <div class="posts-collection-list-wrapper w-dyn-list">
+          <div role="list" class="posts-collection-list w-dyn-items w-row">
+            <div role="listitem" class="_4-collection-item w-dyn-item w-col w-col-3">
+              <a href="{{ latest[0].url }}" class="posts-image w-inline-block">
+                <img
+                  loading="lazy"
+                  src="{{ asset(latest[0].image, site.assets_prefix) }}"
+                  alt="{{ latest[0].title }}"
+                />
+              </a>
+              <div class="post-info-text">
+                <a href="{{ latest[0].url }}" class="post-title w-inline-block">
+                  <h2 class="h3">{{ latest[0].title }}</h2>
+                  <div class="intro-text">{{ latest[0].intro }}</div>
+                </a>
+                <div class="post-author-text cc-small-thumbnail">
+                  <div class="post-author cc-top-margin">Автор:</div>
+                  <a href="{{ latest[0].author_url }}" class="post-author">{{ latest[0].author_name }}</a>
+                </div>
+              </div>
+            </div>
+            <div role="listitem" class="_4-collection-item w-dyn-item w-col w-col-3">
+              <a href="{{ latest[1].url }}" class="posts-image w-inline-block">
+                <img
+                  loading="lazy"
+                  src="{{ asset(latest[1].image, site.assets_prefix) }}"
+                  alt="{{ latest[1].title }}"
+                />
+              </a>
+              <div class="post-info-text">
+                <a href="{{ latest[1].url }}" class="post-title w-inline-block">
+                  <h2 class="h3">{{ latest[1].title }}</h2>
+                  <div class="intro-text">{{ latest[1].intro }}</div>
+                </a>
+                <div class="post-author-text cc-small-thumbnail">
+                  <div class="post-author cc-top-margin">Автор:</div>
+                  <a href="{{ latest[1].author_url }}" class="post-author">{{ latest[1].author_name }}</a>
+                </div>
+              </div>
+            </div>
+            <div role="listitem" class="_4-collection-item w-dyn-item w-col w-col-3">
+              <a href="{{ latest[2].url }}" class="posts-image w-inline-block">
+                <img
+                  loading="lazy"
+                  src="{{ asset(latest[2].image, site.assets_prefix) }}"
+                  alt="{{ latest[2].title }}"
+                />
+              </a>
+              <div class="post-info-text">
+                <a href="{{ latest[2].url }}" class="post-title w-inline-block">
+                  <h2 class="h3">{{ latest[2].title }}</h2>
+                  <div class="intro-text">{{ latest[2].intro }}</div>
+                </a>
+                <div class="post-author-text cc-small-thumbnail">
+                  <div class="post-author cc-top-margin">Автор:</div>
+                  <a href="{{ latest[2].author_url }}" class="post-author">{{ latest[2].author_name }}</a>
+                </div>
+              </div>
+            </div>
+            <div role="listitem" class="_4-collection-item w-dyn-item w-col w-col-3">
+              <a href="{{ latest[3].url }}" class="posts-image w-inline-block">
+                <img
+                  loading="lazy"
+                  src="{{ asset(latest[3].image, site.assets_prefix) }}"
+                  alt="{{ latest[3].title }}"
+                />
+              </a>
+              <div class="post-info-text">
+                <a href="{{ latest[3].url }}" class="post-title w-inline-block">
+                  <h2 class="h3">{{ latest[3].title }}</h2>
+                  <div class="intro-text">{{ latest[3].intro }}</div>
+                </a>
+                <div class="post-author-text cc-small-thumbnail">
+                  <div class="post-author cc-top-margin">Автор:</div>
+                  <a href="{{ latest[3].author_url }}" class="post-author">{{ latest[3].author_name }}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a href="{{ latest_link.url }}" class="button w-button">{{ latest_link.label }}</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

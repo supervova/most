@@ -1,28 +1,15 @@
 # Working stuff
 *~.*
 .obsidian
+/AGENTS.md
+/GEMINI.md
+/NOTES.md
 /assets
-/notes.md
-deploy.sh
+/images
+/mockups
 dist/
 public/
-src/assets/css/*.css
-src/assets/js/_tmp.js
-src/patches/
-
-# Drafts
-docs/_index.md
-docs/_tmp.md
-docs/arj
-docs/content/onboarding-insp.md
-docs/content/prompts.md
-docs/rnd/bot-software.md
-docs/rnd/cjm.md
-docs/rnd/competitors.md
-docs/rnd/logo-ideas.md
-docs/rnd/sales-business-process.md
-docs/rnd/terms.md
-src/templates/html-ipsum.twig
+src/doc
 
 # Media Files
 *.avi
@@ -90,3 +77,6 @@ Desktop.ini
 Thumbs.db
 ehthumbs.db
 ehthumbs_vista.db
+
+
+/dev-core

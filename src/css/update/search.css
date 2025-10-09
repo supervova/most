@@ -1,0 +1,231 @@
+/* -------------------------------------------------------------------------- */
+/* #region: HEADER BUTTON                                                     */
+/* -------------------------------------------------------------------------- */
+
+.site-header-search {
+  border-radius: var(--radius-pill);
+  align-self: center;
+  margin-top: var(--size-1p5);
+  margin-inline-start: var(--size-1);
+}
+
+/* Search results */
+:where(body:has(.search-results-form)) .site-header-search {
+  background-color: var(--color-border);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* #endregion */
+
+/* -------------------------------------------------------------------------- */
+/* #region: MODAL                                                             */
+/* -------------------------------------------------------------------------- */
+
+/* Container */
+.search-modal {
+  display: none;
+  opacity: 0;
+  position: fixed;
+  inset: 0;
+  transition:
+    display var(--duration-300) allow-discrete,
+    opacity var(--duration-300) var(--easing-base),
+    translate var(--duration-300) var(--easing-base);
+  translate: 0 -120px;
+  z-index: var(--z-modal);
+
+  /* Start for hiding */
+  @starting-style {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  /* Visible state */
+  &.search-modal-open {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    translate: 0 0;
+
+    /* Start for appearance */
+    @starting-style {
+      opacity: 0;
+      translate: 0 -120px;
+    }
+  }
+}
+
+/* Backdrop */
+.search-modal-backdrop {
+  background: var(--color-backdrop);
+  backdrop-filter: var(--backdrop-glass);
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-300) var(--easing-base);
+  transition-delay: var(--duration-200);
+
+  .search-modal-open & {
+    opacity: 1;
+    pointer-events: auto;
+
+    @starting-style {
+      opacity: 0;
+    }
+  }
+}
+
+/* Panel */
+.search-modal-content {
+  background: var(--color-bg-02);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-z3);
+  overflow: hidden;
+  position: absolute;
+  top: 15vh;
+  left: 50%;
+  translate: -50% 0;
+  width: 100%;
+  max-width: var(--width-md);
+}
+
+/* #endregion */
+
+/* -------------------------------------------------------------------------- */
+/* #region: FORMS                                                             */
+/* -------------------------------------------------------------------------- */
+
+.search-modal-form,
+.nav-overlay-form,
+.search-results-form {
+  position: relative;
+}
+
+.nav-overlay-form {
+  /* The neighbor below — nav — has a crazy z-index. We need to “beat” it. */
+  z-index: 151001;
+
+  @media only screen and (min-width: 768px) and (min-height: 341px) {
+    margin-inline: 30px;
+  }
+}
+
+.search-results-form {
+  margin-inline: auto;
+  padding-inline: 30px;
+  width: 100%;
+  max-width: var(--width-container);
+
+  @media only screen and (min-width: 1260px) and (min-height: 341px) {
+    padding-inline: 0;
+  }
+}
+
+/* Inputs */
+.search-modal-input,
+.nav-overlay-input,
+.search-results-input {
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  padding-inline-start: var(--size-8);
+  padding-inline-end: var(--size-2p5);
+  width: 100%;
+
+  &:focus {
+    border-color: var(--color-brand);
+    outline: none;
+  }
+}
+
+.search-modal-input,
+.nav-overlay-input {
+  border: 0;
+  border-radius: 0;
+}
+
+.search-modal-input,
+.search-results-input {
+  background: var(--color-bg);
+  font-size: var(--size-3);
+  height: var(--size-8);
+}
+
+.nav-overlay-input {
+  background: var(--color-fill);
+  font-size: var(--font-size-h3);
+  height: var(--size-7);
+}
+
+.search-results-input {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+/* Submit buttons */
+.search-modal-submit,
+.nav-overlay-submit,
+.search-results-submit {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+}
+
+.search-modal-submit,
+.nav-overlay-submit {
+  inset-inline-start: var(--size-1);
+}
+
+.search-results-submit {
+  inset-inline-start: calc(var(--size-1) + 30px);
+
+  @media only screen and (min-width: 1260px) and (min-height: 341px) {
+    inset-inline-start: var(--size-1);
+  }
+}
+
+/* Cancel button */
+input[type='search']::-webkit-search-cancel-button {
+  appearance: none;
+  background-image: var(--icon-remove);
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  cursor: pointer;
+  width: var(--size-4);
+  height: var(--size-4);
+}
+
+/* Suggestions */
+.search-modal-suggestions {
+  list-style: none;
+  margin: 0;
+  padding: var(--size-2p5) var(--size-1);
+
+  li {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.search-modal-suggestion {
+  --button-bg: transparent;
+  --button-color: var(--color-text-02);
+  --button-font-size: var(--font-size-base);
+  --button-bg-hover: var(--color-fill);
+  --button-gap: var(--size-3);
+
+  justify-content: start;
+  letter-spacing: 0;
+  text-align: inline-start;
+  width: 100%;
+
+  .icon {
+    translate: 0 2px;
+  }
+}
+
+

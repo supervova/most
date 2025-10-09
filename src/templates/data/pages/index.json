@@ -1,0 +1,81 @@
+{
+  "page": {
+    "title": "Главная",
+    "meta_title": "МОСТ.Медиа — независимое издание",
+    "meta_description": "МОСТ.Медиа рассказывает о политике, войне и правах человека без цензуры.",
+    "lang": "ru",
+    "body_classes": "page-home",
+    "skip_link_label": "Перейти к содержимому"
+  },
+  "content": {
+    "top_post": {
+      "url": "/ru/posts/est-groznyi-sud-on-zhdjot-nekotorye-podrobnosti-processa-i-prigovora-nikolja-sarkozi",
+      "image": "/placeholders/hero.jpg",
+      "image_alt": "",
+      "title": "Есть грозный суд: он ждёт. Некоторые подробности процесса и приговора Николя Саркози",
+      "excerpt": "Впервые в истории президент Франции признан настолько виновным, что заслужил, по мнению суда, наказание в виде лишения свободы без возможности его смягчения",
+      "author_name": "Сергей Михайлов",
+      "author_url": "/ru/team-members/sergei-mihailov"
+    },
+    "banners": [
+      {
+        "container_class": "banner hideinit just_ru",
+        "link_class": "banner-wrapper2 w-inline-block",
+        "link_style": "padding: 30px",
+        "url": "/ru/russian-propaganda-on-facebook",
+        "image": "/projects/most/images/propaganda1/manipulation-algorithms-ru.png",
+        "image_alt": "Алгоритмы манипуляции",
+        "title": "Алгоритмы манипуляции. Как российская пропаганда распространяется в Facebook",
+        "subtitle": "Расследование"
+      },
+      {
+        "container_class": "banner",
+        "link_class": "banner-wrapper w-inline-block",
+        "link_style": "",
+        "url": "/ru/openletter/1",
+        "image": "/projects/most/images/russian-dissident-3.jpg",
+        "image_alt": "Открытое письмо",
+        "title": "Открытое письмо Президенту США Дональду Трампу, членам Конгресса и народу Америки",
+        "subtitle": "Специальный проект"
+      }
+    ],
+    "latest_posts": [
+      {
+        "url": "/ru/posts/izrail-ne-mog-ne-otvetit-na-7-oktjabrja-no-hochetsja-ponjat-chto-budet-v-itoge",
+        "image": "/placeholders/card-01.jpg",
+        "title": "«Израиль не мог не ответить на 7 октября. Но хочется понять, что будет в итоге?»",
+        "intro": "Интервью с востоковедом Марианной Беленькой (телеграм-канал «Фалафельная»)",
+        "author_name": "Максим Рычков",
+        "author_url": "/ru/team-members/maxim-rychkov"
+      },
+      {
+        "url": "/ru/posts/proch-ot-moskvy-dajosh-evropu-kak-ukrainskie-avtory-vozrodili-nacionalnuju-kulturu-i-pogibli-v-stalinskih-repressiah",
+        "image": "/placeholders/card-02.jpg",
+        "title": "«Прочь от Москвы! Даёшь Европу»! Как украинские авторы возродили национальную культуру и погибли в сталинских репрессиях",
+        "intro": "Короткий период взлёта украинской литературы и искусства 1920-30х годов называют «Расстрелянным возрождением». Это золотое время для Украины закончилось так же внезапно, как и началось.",
+        "author_name": "Катерина Барабаш",
+        "author_url": "/ru/team-members/katerina-barabash"
+      },
+      {
+        "url": "/ru/posts/putin-rozhdenie-i-pererozhdenie",
+        "image": "/placeholders/card-03.jpg",
+        "title": "Путин: рождение и перерождение",
+        "intro": "Путин не всегда был перемазанным кровью деспотом, которому плевать на химеру совести, на мораль и право; который легко убивает что Навального, что Пригожина, что тысячами людей на войне. И хотел бы я видеть того, кто точно знает, как и почему это произошло. Но нам сейчас важнее, в кого он превратился",
+        "author_name": "Дмитрий Губин",
+        "author_url": "/ru/team-members/dmitry-gubin"
+      },
+      {
+        "url": "/ru/posts/britansky-istorik-ob-operacii-barbarossa-ispansky-klassik-o-zhizni-posle-frankizma-kanadskaja-kitajanka-o-voine-s-japoniey",
+        "image": "/placeholders/card-04.jpg",
+        "title": "Британский историк — об операции «Барбаросса», испанский классик — о жизни после франкизма, канадская китаянка — о войне с Японией",
+        "intro": "В Книжном клубе «Моста» по понедельникам — три новинки российских издательств",
+        "author_name": "Макс Володин",
+        "author_url": "/ru/team-members/max-volodin"
+      }
+    ],
+    "latest_posts_link": {
+      "label": "Читать все публикации",
+      "url": "/ru/latest-posts"
+    }
+  }
+}

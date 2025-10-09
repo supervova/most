@@ -1,0 +1,133 @@
+:root {
+
+  /* #region: COLORS */
+
+  --s-base: 82%;
+  --s-min: 12%;
+
+  --h: 184;
+  --s: var(--s-base);
+  --l: 28%;
+
+  --color-brand: hsl(var(--h) var(--s) var(--l));
+  --color-bg-brand: hsl(var(--h) var(--s) 97%);
+
+  --color-bg: #fff;
+  --color-bg-02: hsl(var(--h) var(--s-min) 98%);
+  --color-fill: hsl(var(--h) var(--s-min) 10% / 0.03);
+
+  --color-text: #000;
+  --color-text-02: rgb(0 0 0 / 0.6);
+  --color-icon: hsl(var(--h) var(--s-min) 48%);
+  --color-icon-bold: hsl(var(--h) var(--s-min) 64%);
+  --color-border: rgb(0 0 0 / 0.1);
+
+  --color-focus: color-mix(in oklch, var(--color-brand) 55%, transparent);
+  --color-backdrop: hsl(var(--h) var(--s-min) 92% / 0.44);
+
+  /* Shadow base color */
+  --color-shadow: var(--h) var(--s-min) 10%;
+  --color-shadow-light: hsl(0 0% 100% / 4%);
+
+  /* #endregion */
+
+  /* #region: TYPOGRAPHY */
+
+  --font-family-title: Finlandica, sans-serif;
+  --font-family-base: Inter, 'Helvetica Neue', Arial, sans-serif;
+
+  --font-size-base: 16px;
+  --font-size-h3: 18px;
+
+  /* #endregion */
+
+  /* #region: SIZING */
+  --size-half: 4px;
+  --size-1: 8px;
+  --size-1p5: 12px;
+  --size-2: 16px;
+  --size-2p5: 20px;
+  --size-3: 24px;
+  --size-4: 32px;
+  --size-5: 40px;
+  --size-6: 48px;
+  --size-7: 56px;
+  --size-8: 64px;
+
+  --size-line: var(--size-3);
+  /* #endregion */
+
+  /* #region: SURFACES */
+
+  --backdrop-glass: blur(20px);
+
+  --radius-xs: 3px;
+  --radius-sm: 5px;
+  --radius-base: var(--size-2);
+  --radius-lg: var(--size-3);
+  --radius-xl: var(--size-4);
+  --radius-pill: 100vmax;
+
+  --width-sm: 272px;
+  --width-base: 320px;
+  --width-md: 448px;
+  --width-lg: 544px;
+  --width-xl: 720px;
+  --width-container: 1200px;
+  --width-prose: 70ch;
+
+  --shadow-z1:
+    0 0 0.5px 1px var(--color-shadow-light),
+    0 0 0 1px hsl(var(--color-shadow) / var(--shadow-ring, 0.04)),
+    0 1px 2px hsl(var(--color-shadow) / var(--shadow-opacity, 0.06)),
+    0 2px 4px -1px hsl(var(--color-shadow) / var(--shadow-opacity, 0.06));
+
+  --shadow-z2:
+    0 0 0.5px 1px var(--color-shadow-light),
+    0 0 0 1px hsl(var(--color-shadow) / var(--shadow-ring, 0.04)),
+    0 2px 4px hsl(var(--color-shadow) / var(--shadow-opacity, 0.06)),
+    0 6px 12px -2px hsl(var(--color-shadow) / var(--shadow-opacity, 0.06)),
+    0 14px 28px -4px hsl(var(--color-shadow) / var(--shadow-opacity, 0.06));
+
+  --shadow-z3:
+    0 0 0.5px 1px var(--color-shadow-light),
+    0 0 0 1px hsl(var(--color-shadow) / var(--shadow-ring, 0.04)),
+    0 3px 6px hsl(var(--color-shadow) / var(--shadow-opacity, 0.06)),
+    0 8px 16px -2px hsl(var(--color-shadow) / var(--shadow-opacity, 0.06)),
+    0 18px 36px -4px hsl(var(--color-shadow) / var(--shadow-opacity, 0.06)),
+    0 30px 60px -4px hsl(var(--color-shadow) / var(--shadow-opacity, 0.06));
+
+  --z-sticky: 10;
+  --z-fixed: 20;
+  --z-fab: 30;
+  --z-popover: 40;
+  --z-tooltip: 50;
+  --z-drawer: 60;
+  --z-modal: 1010;
+  --z-notification: 1020;
+
+  /* #endregion */
+
+  /* #region: MOTION DESIGN */
+
+  --duration-50: 0.07s;
+  --duration-100: 0.11s;
+  --duration-200: 0.15s;
+  --duration-300: 0.24s;
+  --duration-400: 0.4s;
+  --duration-500: 0.7s;
+  --duration-600: 1s;
+
+  --easing-base: cubic-bezier(0.2, 0, 0.38, 0.9);
+  --easing-appearance: cubic-bezier(0, 0, 0.38, 0.9);
+  --easing-disappearance: cubic-bezier(0.2, 0, 1, 0.9);
+  --easing-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* #endregion */
+
+  /* #region: ICONS */
+
+  --icon-remove: url('data:image/svg+xml;utf8,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M7.87868%207.87868L10%2010M10%2010L12.1213%2012.1213M10%2010L7.87868%2012.1213M10%2010L12.1213%207.87868M17%2010C17%2013.866%2013.866%2017%2010%2017C6.13401%2017%203%2013.866%203%2010C3%206.13401%206.13401%203%2010%203C13.866%203%2017%206.13401%2017%2010Z%22%20stroke%3D%22%23637D7E%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E');
+
+  /* #endregion */
+}

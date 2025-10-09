@@ -1,0 +1,30 @@
+/* Utilities */
+
+.visually-hidden {
+  border: 0;
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.skip-link {
+  background: var(--color-brand);
+  color: #fff;
+  display: inline-block;
+  padding: var(--size-1) var(--size-2);
+  position: absolute;
+  left: 1rem;
+  text-decoration: none;
+  top: -200px;
+  transition: top var(--duration-200) var(--easing-base);
+  z-index: calc(var(--z-modal) - 1);
+
+  &:focus {
+    top: var(--size-2);
+  }
+}
+

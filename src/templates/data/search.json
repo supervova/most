@@ -1,0 +1,18 @@
+{
+  "action": "/ru/search",
+  "close_label": "Close search",
+  "examples": [
+    {"q": "война", "href": "/ru/search/война"},
+    {"q": "томагавк", "href": "/ru/search/томагавк"},
+    {"q": "военная цензура", "href": "/ru/search/военная%20цензура"},
+    {"q": "санкции", "href": "/ru/search/санкции"}
+  ],
+  "examples_title": "Popular queries",
+  "input_label": "What are we looking for?",
+  "label": "Search",
+  "param": "q",
+  "placeholder": "Find…",
+  "results_page": "/{lang}/search/{query}",
+  "submit_label": "Search",
+  "title": "Search across materials"
+}

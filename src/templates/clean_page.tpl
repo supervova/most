@@ -39,8 +39,10 @@
 <link rel="manifest" href="/manifest.json" />
 <link href="/css/bootstrap.css" rel="stylesheet">
 <link href="/css/jquery.toast.min.css" rel="stylesheet">
-<link href="/css/main.css" rel="stylesheet">{$projectcss}
+<link href="/css/main.css" rel="stylesheet">
 <link href="/css/smartphoto.min.css" rel="stylesheet">
+{$projectcss}
+<link href="/projects/most/css/enhancements.css?v202510131913" rel="stylesheet">
 {$addheadtags}
 <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous"><script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script><script type="text/javascript">WebFont.load({  google: {    families: ["Merriweather:300,300italic,400,400italic,700,700italic,900,900italic","Lato:100,100italic,300,300italic,400,400italic,700,700italic,900,900italic","Tenor Sans:regular","Source Serif Pro:regular,700","Libre Franklin:regular,600","Inter:regular,600,700,italic:cyrillic,latin","Finlandica:regular,500,600,700,italic:cyrillic,latin", "Mrs Saint Delafield:regular,500,600,700,italic:cyrillic,latin"]  }});</script>
 <style>
@@ -110,7 +112,7 @@ function isCriticalJsError(message) {
   return criticalKeywords.some(keyword => message.includes(keyword));
 }
 </script>
-<script src="/js/jquery-2.1.3.min.js"></script>  
+<script src="/js/jquery-2.1.3.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/jquery.toast.min.js"></script>
 <script src="/js/bootpopup.js"></script>
@@ -121,6 +123,9 @@ function isCriticalJsError(message) {
 <script src="/js/jquery-smartphoto.min.js"></script>
 <script src="/js/qwerty.js"></script>
 <script src="/js/jsshare.js"></script>
+
+<script src="/projects/most/js/search.js?v202510131913" type="module"></script>
+
 <script><!--
 document.addEventListener("DOMContentLoaded", function(event) {
   var shareItems = document.querySelectorAll('.social_share');

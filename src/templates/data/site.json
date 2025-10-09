@@ -1,0 +1,46 @@
+{
+  "name": "МОСТ.Медиа",
+  "home_url": "/",
+  "assets_prefix": "",
+  "project_prefix": "/projects/most",
+  "navigation_label": "Главное меню",
+  "logo": {
+    "path": "/projects/most/images/logo-header.svg",
+    "alt": "МОСТ.Медиа",
+    "width": 156,
+    "height": 48
+  },
+  "twitter_creator": "@mostmedia",
+  "navigation": [
+    { "label": "Политика", "url": "/category/politics", "class": "site-header-link" },
+    { "label": "Конфликты", "url": "/category/conflicts", "class": "site-header-link" },
+    { "label": "Экономика", "url": "/category/economy", "class": "site-header-link" },
+    { "label": "Мнения", "url": "/category/opinions", "class": "site-header-link" },
+    { "label": "Культура", "url": "/category/culture", "class": "site-header-link" },
+    { "label": "Специальные проекты", "url": "/special-projects", "class": "site-header-link" }
+  ],
+  "cta": {
+    "label": "Поддержать",
+    "url": "/support"
+  },
+  "search": {
+    "label": "Поиск",
+    "title": "Искать по материалам",
+    "close_label": "Закрыть поиск",
+    "input_label": "Что ищем?",
+    "placeholder": "Найти…",
+    "submit_label": "Искать",
+    "examples_title": "Популярные запросы",
+    "examples": [
+      {"q": "война", "href": "/ru/search/война"},
+      {"q": "томагавк", "href": "/ru/search/томагавк"},
+      {"q": "военная цензура", "href": "/ru/search/военная%20цензура"},
+      {"q": "санкции", "href": "/ru/search/санкции"}
+    ],
+    "results_page": "/{lang}/search/{query}",
+    "param": "q"
+  },
+  "footer": {
+    "copy": "© МОСТ.Медиа"
+  }
+}

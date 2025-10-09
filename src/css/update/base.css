@@ -1,0 +1,15 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+  scrollbar-gutter: stable;
+}
+
+.page-search-locked {
+  overflow: hidden;
+}
+
