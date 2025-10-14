@@ -5,29 +5,31 @@
 // -----------------------------------------------------------------------------
 
 import { src, dest, series, parallel, watch } from 'gulp';
-import { deleteAsync } from 'del';
-import path from 'node:path';
-import fs from 'node:fs';
-import plumberPkg from 'gulp-plumber';
-import sizePkg from 'gulp-size';
+
+import autoprefixer from 'autoprefixer';
 import browserSyncModule from 'browser-sync';
-import fg from 'fast-glob';
-import gulpIfPkg from 'gulp-if';
-import twigPkg from 'gulp-twig';
+import changed from 'gulp-changed';
+import cssnano from 'cssnano';
 import dataPkg from 'gulp-data';
-import sassPkg from 'gulp-dart-sass';
-import sourcemapsPkg from 'gulp-sourcemaps';
+import fg from 'fast-glob';
+import fs from 'node:fs';
+import gulpEsbuildPkg from 'gulp-esbuild';
+import gulpIfPkg from 'gulp-if';
+import imagemin, { gifsicle, mozjpeg, optipng, svgo } from 'gulp-imagemin';
+import path from 'node:path';
+import plumberPkg from 'gulp-plumber';
 import postcss from 'gulp-postcss';
-import postcssImport from 'postcss-import';
 import postcssCustomMedia from 'postcss-custom-media';
+import postcssImport from 'postcss-import';
 import postcssNesting from 'postcss-nesting';
 import postcssPresetEnv from 'postcss-preset-env';
 import postcssPxToRem from 'postcss-pxtorem';
-import autoprefixer from 'autoprefixer';
-import cssnano from 'cssnano';
-import gulpEsbuildPkg from 'gulp-esbuild';
+import sassPkg from 'gulp-dart-sass';
+import sizePkg from 'gulp-size';
+import sourcemapsPkg from 'gulp-sourcemaps';
 import svgSprite from 'gulp-svg-sprite';
-import imagemin, { gifsicle, mozjpeg, optipng, svgo } from 'gulp-imagemin';
+import twigPkg from 'gulp-twig';
+import { deleteAsync } from 'del';
 
 const removeCssComments = () => ({
   postcssPlugin: 'remove-css-comments',
@@ -125,6 +127,10 @@ const paths = {
     base: 'src/templates',
     dest: 'public/projects/most/templates',
     watch: ['src/templates/*.tpl', 'src/templates/data/search.json'],
+  },
+  engine: {
+    src: 'src/engine/*.class.php',
+    dest: 'public/projects/most/engine',
   },
 };
 
@@ -725,6 +731,13 @@ function copyTemplateAssets() {
     .pipe(dest(paths.templateAssets.dest));
 }
 
+// Engine
+function copyEngine() {
+  return src(paths.engine.src, { encoding: false })
+    .pipe(changed(paths.engine.dest))
+    .pipe(dest(paths.engine.dest));
+}
+
 // #endregion
 
 // -----------------------------------------------------------------------------
@@ -755,6 +768,7 @@ function serve(done) {
   watch(paths.placeholders.src, copyPlaceholders);
   watch(paths.core.src, copyCoreAssets);
   watch(paths.templateAssets.watch, copyTemplateAssets);
+  watch(paths.engine.src, series(copyEngine));
 
   done();
 }
@@ -802,7 +816,15 @@ const build = series(
 
 const clean = parallel(cleanDist, cleanPublic);
 
-export { build, copyPlaceholders as ph, icons, clean, dev };
+export {
+  build,
+  copyPlaceholders as ph,
+  icons,
+  clean,
+  dev,
+  copyEngine as en,
+  stylesProd as css,
+};
 
 export default dev;
 

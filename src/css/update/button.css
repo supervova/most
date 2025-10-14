@@ -60,7 +60,7 @@
   }
 
   &:active {
-    translate: 0 1px;
+    scale: 0.95;
   }
 
   @media (any-hover: hover) {
@@ -68,6 +68,7 @@
       background: var(--button-bg-hover);
       filter: var(--button-filter-hover);
       color: var(--button-color-hover);
+      text-decoration: none;
     }
   }
 }

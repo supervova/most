@@ -7,6 +7,10 @@
 html {
   font-size: 100%;
   scrollbar-gutter: stable;
+
+  @media only screen and (min-width: 768px) and (min-height: 341px) {
+    hanging-punctuation: first allow-end last;
+  }
 }
 
 .page-search-locked {

@@ -61,6 +61,10 @@ body {
 
 /* #endregion */
 
+/* -------------------------------------------------------------------------- */
+/* #region: HEADER                                                            */
+/* -------------------------------------------------------------------------- */
+
 .maincontainer {
   margin-inline: auto;
 }
@@ -70,3 +74,31 @@ body {
     display: none;
   }
 }
+
+.post-title:hover,
+.navigation-link:hover,
+.section-title-text-small > a:hover,
+.banner-wrapper:hover,
+.banner-wrapper2:hover,
+.post-author:hover {
+  text-decoration: none;
+}
+
+.link-footer,
+.link-6, .link-7 {
+  &:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+}
+
+h2, .h2 {
+  letter-spacing: -0.5px;
+}
+
+.site-footer {
+  margin-inline: auto;
+  max-width: var(--width-container);
+}
+
+/* #endregion */

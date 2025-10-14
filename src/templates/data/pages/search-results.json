@@ -1,0 +1,38 @@
+{
+  "page": {
+    "title": "Результаты поиска",
+    "meta_title": "Результаты поиска – МОСТ.Медиа",
+    "meta_description": "",
+    "lang": "ru",
+    "body_classes": "page-serp",
+    "skip_link_label": ""
+  },
+  "content": {
+    "results": [
+      {
+        "url": "/ru/posts/22-iyunya-nuzhno-pomnit-voyna----eto-ne-tolko-kogda-napadayut-na-nas-no-i-kogda-napadaem-my",
+        "image": "/projects/most/images/placeholders/search.jpg",
+        "title": "«22 июня нужно помнить: война — это не только когда нападают на нас, но и когда нападаем мы»",
+        "intro": "Разговор с историком Тамарой Эйдельман*",
+        "author_name": "Максим Рычков",
+        "author_url": "/ru/team-members/maxim-rychkov"
+      },
+      {
+        "url": "#",
+        "image": "/projects/most/images/placeholders/card-02.jpg",
+        "title": "Второй результат поиска",
+        "intro": "Краткое описание второго результата.",
+        "author_name": "Автор",
+        "author_url": "#"
+      },
+      {
+        "url": "#",
+        "image": "/projects/most/images/placeholders/card-03.jpg",
+        "title": "Третий результат поиска",
+        "intro": "Краткое описание третьего результата.",
+        "author_name": "Автор",
+        "author_url": "#"
+      }
+    ]
+  }
+}

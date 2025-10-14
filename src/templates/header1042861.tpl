@@ -1,4 +1,4 @@
-<link href="/projects/most/css/enhancements.css?v=202510141238" rel="stylesheet">
+<link href="/projects/most/css/enhancements.css?v=202510141429" rel="stylesheet">
 
 <div id="p_prldr">
   <div class="contpre">
@@ -149,7 +149,7 @@
         aria-haspopup="dialog"
         aria-controls="search-modal"
         aria-expanded="false"
-        aria-label="{$search.label}"
+        aria-label="Поиск"
       >
         <svg class="icon" aria-hidden="true" focusable="false">
           <use xlink:href="/projects/most/icons/sprite.svg#icon-search"></use>
@@ -174,20 +174,20 @@
   >
     <form
       class="nav-overlay-form"
-      action="{$search.action}"
+      action="/search"
       data-search-form
       role="search"
       method="get"
     >
       <input
         class="nav-overlay-input"
-        name="{$search.param}"
+        name="q"
         type="search"
         data-search-input
-        placeholder="{$search.placeholder}"
+        placeholder="Найти"
         autocomplete="off"
       />
-      <button class="nav-overlay-submit button button-icon button-ghost" type="submit" aria-label="{$search.submit_label}">
+      <button class="nav-overlay-submit button button-icon button-ghost" type="submit" aria-label="Отправить">
         <svg class="icon" aria-hidden="true" focusable="false">
           <use xlink:href="/projects/most/icons/sprite.svg#icon-search"></use>
         </svg>
@@ -215,8 +215,8 @@
   class="search-modal"
   id="search-modal"
   data-search-modal
-  data-search-results="{$search.results_page}"
-  data-search-param="{$search.param}"
+  data-search-results="/search"
+  data-search-param="q"
   role="dialog"
   aria-modal="true"
   aria-labelledby="search-modal-title"
@@ -226,77 +226,77 @@
   <div class="search-modal-content" role="document">
     <form
       class="search-modal-form"
-      action="{$search.action}"
+      action="/search"
       data-search-form
       role="search"
       method="get"
     >
       <label class="visually-hidden" for="search-query">
-        {$search.input_label}
+        Поисковый запрос
       </label>
       <input
         class="search-modal-input"
         id="search-query"
-        name="{$search.param}"
+        name="q"
         type="search"
         data-search-input
-        placeholder="{$search.placeholder}"
+        placeholder="Найти"
         autocomplete="off"
       />
-      <button class="button button-icon button-ghost search-modal-submit" type="submit" aria-label="{$search.submit_label}">
+      <button class="button button-icon button-ghost search-modal-submit" type="submit" aria-label="Отправить">
         <svg class="icon" aria-hidden="true" focusable="false">
           <use xlink:href="/projects/most/icons/sprite.svg#icon-search"></use>
         </svg>
       </button>
     </form>
 
-    <ul class="search-modal-suggestions" aria-label="{$search.examples_title}">
+    <ul class="search-modal-suggestions" aria-label="Популярные запросы">
       <li>
         <a
           class="button search-modal-suggestion"
-          href="{$search.examples[0].href}"
+          href="/ru/search/Навальный"
         >
           <svg class="icon icon-sm" aria-hidden="true" focusable="false">
             <use xlink:href="/projects/most/icons/sprite.svg#icon-sm-search"></use>
           </svg>
-          {$search.examples[0].q}
+          Навальный
         </a>
       </li>
       <li>
         <a
           class="button search-modal-suggestion"
-          href="{$search.examples[1].href}"
+          href="/ru/search/Война+в+Украине"
         >
           <svg class="icon icon-sm" aria-hidden="true" focusable="false">
             <use xlink:href="/projects/most/icons/sprite.svg#icon-sm-search"></use>
           </svg>
-          {$search.examples[1].q}
+          Война в Украине
         </a>
       </li>
       <li>
         <a
           class="button search-modal-suggestion"
-          href="{$search.examples[2].href}"
+          href="/ru/search/Фабрика+троллей"
         >
           <svg class="icon icon-sm" aria-hidden="true" focusable="false">
             <use xlink:href="/projects/most/icons/sprite.svg#icon-sm-search"></use>
           </svg>
-          {$search.examples[2].q}
+          Фабрика троллей
         </a>
       </li>
       <li>
         <a
           class="button search-modal-suggestion"
-          href="{$search.examples[3].href}"
+          href="/ru/search/Санкции"
         >
           <svg class="icon icon-sm" aria-hidden="true" focusable="false">
             <use xlink:href="/projects/most/icons/sprite.svg#icon-sm-search"></use>
           </svg>
-          {$search.examples[3].q}
+          Санкции
         </a>
       </li>
     </ul>
   </div>
 </section>
 
-<script src="/projects/most/js/search.js?v=202510141238" type="module"></script>
+<script src="/projects/most/js/search.js?v=202510141429" type="module"></script>

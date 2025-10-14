@@ -115,6 +115,7 @@
 
 .search-results-form {
   margin-inline: auto;
+  margin-block: var(--size-2) var(--size-line);
   padding-inline: 30px;
   width: 100%;
   max-width: var(--width-container);
