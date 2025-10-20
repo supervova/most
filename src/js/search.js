@@ -8,31 +8,149 @@ const SUPPORTED_LANGS = ['ru', 'en', 'es', 'de', 'fr', 'it', 'pt'];
  */
 
 /**
- * Инициализирует модальное окно поиска.
+ * Инициализирует формы поиска и модальное окно.
  * @param {SearchOptions} [options] - Параметры инициализации.
  */
 export const initSearch = (options = {}) => {
   const toggles = document.querySelectorAll('[data-search-toggle]');
   const modal = document.querySelector('[data-search-modal]');
+  const forms = document.querySelectorAll('[data-search-form]');
 
-  if (!toggles.length || !modal) {
-    return;
-  }
-
-  const form = modal.querySelector('[data-search-form]');
-  const input = modal.querySelector('[data-search-input]');
-  const dismissButtons = modal.querySelectorAll('[data-search-dismiss]');
-  const exampleButtons = modal.querySelectorAll('[data-search-example]');
-
-  if (!form || !input) {
+  if (!forms.length && !toggles.length) {
     return;
   }
 
   const resultsPageTemplate = (
     options.resultsPage ||
-    modal.dataset.searchResults ||
+    (modal && modal.dataset.searchResults) ||
     '/{lang}/search/{query}'
   ).trim();
+
+  const resolveLanguage = () => {
+    const raw = (document.documentElement.lang || '').toLowerCase();
+    const normalized = raw.replace('_', '-');
+    const [base] = normalized.split('-');
+    if (SUPPORTED_LANGS.includes(base)) {
+      return base;
+    }
+    return 'ru';
+  };
+
+  const normalizeTemplate = (language, query) => {
+    if (resultsPageTemplate.includes('{query}')) {
+      return resultsPageTemplate
+        .replaceAll('{lang}', language)
+        .replaceAll('{query}', query);
+    }
+
+    const pathWithLang = resultsPageTemplate.includes('{lang}')
+      ? resultsPageTemplate.replaceAll('{lang}', language)
+      : `/${language}${resultsPageTemplate.startsWith('/') ? '' : '/'}${resultsPageTemplate}`;
+
+    const trimmedBase = pathWithLang.replace(/\/+$/, '');
+    return `${trimmedBase}/${query}`;
+  };
+
+  const buildTargetUrl = (query) => {
+    const language = resolveLanguage();
+    const path = normalizeTemplate(language, query);
+    if (/^https?:\/\//.test(path)) {
+      return path;
+    }
+    return path.startsWith('/') ? path : `/${path}`;
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const input = form.querySelector('[data-search-input]');
+
+    if (!input) {
+      return;
+    }
+
+    const query = input.value.trim();
+
+    if (!query) {
+      input.focus();
+      return;
+    }
+
+    window.location.assign(buildTargetUrl(query));
+  };
+
+  forms.forEach((form) => {
+    form.addEventListener('submit', handleSubmit);
+  });
+
+  // --- Modal-specific logic ---
+  if (!toggles.length || !modal) {
+    return;
+  }
+
+  const modalInput = modal.querySelector('[data-search-input]');
+  const dismissButtons = modal.querySelectorAll('[data-search-dismiss]');
+  const suggestionsList = modal.querySelector('.search-modal-suggestions');
+
+  if (!modalInput) {
+    return;
+  }
+
+  // --- Suggestions Logic ---
+  const suggestionsHandler = (() => {
+    if (!suggestionsList) return null;
+
+    const staticSuggestions = ['War in Ukraine', 'Zelenskyy', 'Putin', 'Trump'];
+    let dynamicSuggestions = [];
+    try {
+      dynamicSuggestions = JSON.parse(modal.dataset.searchSuggestions || '[]');
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error('Failed to parse search suggestions:', e);
+    }
+
+    const allSuggestions =
+      dynamicSuggestions.length > 0 ? dynamicSuggestions : staticSuggestions;
+    const initialSuggestions = allSuggestions.slice(0, 5);
+
+    const render = (queries) => {
+      const lang = resolveLanguage();
+      suggestionsList.innerHTML = queries
+        .map(
+          (query) => `
+        <li>
+          <a class="button search-modal-suggestion" href="/${lang}/search/${encodeURIComponent(query)}">
+            <svg class="icon icon-sm" aria-hidden="true" focusable="false" role="img"><use href="/projects/most/icons/sprite.svg#icon-sm-search"></use></svg>
+            ${query}
+          </a>
+        </li>
+      `
+        )
+        .join('');
+    };
+
+    const filter = () => {
+      const value = modalInput.value.trim().toLowerCase();
+      if (value.length < 3) {
+        render(initialSuggestions);
+        return;
+      }
+      const filtered = allSuggestions
+        .filter((s) => s.toLowerCase().includes(value))
+        .slice(0, 5);
+      render(filtered);
+    };
+
+    const reset = () => {
+      modalInput.value = '';
+      render(initialSuggestions);
+    };
+
+    modalInput.addEventListener('input', filter);
+
+    return { reset };
+  })();
+  // --- End of Suggestions Logic ---
 
   let isOpen = false;
   let lastTrigger = null;
@@ -50,8 +168,8 @@ export const initSearch = (options = {}) => {
 
   const focusInput = () => {
     requestAnimationFrame(() => {
-      input.focus();
-      input.select();
+      modalInput.focus();
+      modalInput.select();
     });
   };
 
@@ -88,54 +206,12 @@ export const initSearch = (options = {}) => {
     lockScroll(true);
     setExpanded(true);
     document.addEventListener('keydown', handleKeydown);
+
+    if (suggestionsHandler) {
+      suggestionsHandler.reset();
+    }
+
     focusInput();
-  };
-
-  const resolveLanguage = () => {
-    const raw = (document.documentElement.lang || '').toLowerCase();
-    const normalized = raw.replace('_', '-');
-    const [base] = normalized.split('-');
-    if (SUPPORTED_LANGS.includes(base)) {
-      return base;
-    }
-    return 'ru';
-  };
-
-  const normalizeTemplate = (language, query) => {
-    const encodedQuery = encodeURIComponent(query);
-    if (resultsPageTemplate.includes('{query}')) {
-      return resultsPageTemplate
-        .replaceAll('{lang}', language)
-        .replaceAll('{query}', encodedQuery);
-    }
-
-    const pathWithLang = resultsPageTemplate.includes('{lang}')
-      ? resultsPageTemplate.replaceAll('{lang}', language)
-      : `/${language}${resultsPageTemplate.startsWith('/') ? '' : '/'}${resultsPageTemplate}`;
-
-    const trimmedBase = pathWithLang.replace(/\/+$/, '');
-    return `${trimmedBase}/${encodedQuery}`;
-  };
-
-  const buildTargetUrl = (query) => {
-    const language = resolveLanguage();
-    const path = normalizeTemplate(language, query);
-    if (/^https?:\/\//.test(path)) {
-      return path;
-    }
-    return path.startsWith('/') ? path : `/${path}`;
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const query = input.value.trim();
-
-    if (!query) {
-      input.focus();
-      return;
-    }
-
-    window.location.assign(buildTargetUrl(query));
   };
 
   toggles.forEach((toggle) => {
@@ -149,15 +225,6 @@ export const initSearch = (options = {}) => {
     button.addEventListener('click', (event) => {
       event.preventDefault();
       close();
-    });
-  });
-
-  form.addEventListener('submit', handleSubmit);
-
-  exampleButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      input.value = button.textContent.trim();
-      focusInput();
     });
   });
 };

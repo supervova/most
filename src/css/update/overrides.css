@@ -4,6 +4,7 @@
 
 /* Remove the strut */
 div:empty[style*='height:80px;'] {
+  /* stylelint-disable-next-line declaration-no-important */
   display: none !important;
 }
 
@@ -43,16 +44,17 @@ body {
     background: transparent;
     text-decoration: none;
   }
-  @media only screen and (min-width: 768px) and (min-height: 341px) {
+
+  @media only screen and (width >= 768px) and (height >= 341px) {
     display: none;
   }
 
-  @media only screen and (min-width: 1200px) and (min-height: 341px) {
+  @media only screen and (width >= 1200px) and (height >= 341px) {
     display: block;
   }
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (width <= 991px) {
   .nav-menu {
     margin-top: 0;
     padding-top: var(--size-6);
@@ -70,7 +72,7 @@ body {
 }
 
 .site-header-actions {
-  @media only screen and (min-width: 991px) and (min-height: 341px) {
+  @media only screen and (width >= 991px) and (height >= 341px) {
     display: none;
   }
 }
@@ -99,6 +101,16 @@ h2, .h2 {
 .site-footer {
   margin-inline: auto;
   max-width: var(--width-container);
+}
+
+.postvote,
+.postvotedplus,
+.postvotedminus {
+  font-size: 30px;
+}
+
+.posts-collection-list-wrapper {
+  padding-bottom: 3rem;
 }
 
 /* #endregion */

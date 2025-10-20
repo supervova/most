@@ -1,10 +1,10 @@
 {% set nav = site.navigation %}
 {% set search_examples = site.search.examples %}
-{% set language_code = lng_html|default('ru')|lower|replace({'-': '_'})|split('_')|first %}
-{% if language_code not in ['ru', 'en', 'es', 'de', 'fr', 'it', 'pt'] %}
-  {% set language_code = 'ru' %}
+{% set lang = lng_html|default('ru')|lower|replace({'-': '_'})|split('_')|first %}
+{% if lang not in ['ru', 'en', 'es', 'de', 'fr', 'it', 'pt'] %}
+  {% set lang = 'ru' %}
 {% endif %}
-{% set search_template_localized = site.search.results_page|replace({'{lang}': language_code}) %}
+{% set search_template_localized = site.search.results_page|replace({'{lang}': lang}) %}
 {% set search_action = search_template_localized|replace({'/{query}': '', '{query}': ''}) %}
 
 <div id="p_prldr">

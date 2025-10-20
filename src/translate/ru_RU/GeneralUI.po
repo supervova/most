@@ -104,3 +104,32 @@ msgstr "30 Последних публикаций:"
 
 msgid "Latest posts:"
 msgstr "Последние публикации:"
+
+# ------------------------------------------------------------------------------
+# Поиск
+# ------------------------------------------------------------------------------
+
+msgid "Search..."
+msgstr "Найти..."
+
+msgid "Find"
+msgstr "Найти"
+
+msgid "Search mostmedia.org"
+msgstr "Искать на сайте"
+
+msgid "War in Ukraine"
+msgstr "Война в Украине"
+
+msgid "Zelenskyy"
+msgstr "Зеленский"
+
+msgid "Putin"
+msgstr "Путин"
+
+msgid "Trump"
+msgstr "Трамп"
+
+msgid "Submit search"
+msgstr "Искать"
+

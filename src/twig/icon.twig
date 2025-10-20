@@ -1,0 +1,10 @@
+{#
+{% include 'icon.twig' with { name: 'search' } %}
+{% include 'icon.twig' with { name: feature.icon } %}
+{% include 'icon.twig' with { name: 'sm-chevron-down', classes: 'is-sm' } %}
+{% include 'icon.twig' with { name: 'flag-russia-ru', classes: 'me-1', file: 'flags' } %}
+#}
+
+<svg class="icon icon-{{ name }}{% if classes %} {{ classes }}{% endif %}" aria-hidden="true" focusable="false">
+  <use xlink:href="/projects/most/icons/sprite.svg#icon-{{ name }}"></use>
+</svg>

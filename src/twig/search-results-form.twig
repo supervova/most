@@ -1,0 +1,18 @@
+<form
+  class="search-results-form"
+  data-search-form
+  role="search"
+>
+  <input
+    class="search-results-input"
+    name="q"
+    type="search"
+    data-search-input
+    placeholder="{{ 'Search...'|trans }}"
+    autocomplete="off"
+    value="{$blogsearch}"
+  />
+  <button class="search-results-submit button button-icon button-ghost" type="submit" aria-label="{{ 'Submit search'|trans }}">
+    {% include 'icon.twig' with {name: 'search'} %}
+  </button>
+</form>

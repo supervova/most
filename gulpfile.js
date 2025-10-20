@@ -8,7 +8,7 @@ import { src, dest, series, parallel, watch } from 'gulp';
 
 import autoprefixer from 'autoprefixer';
 import browserSyncModule from 'browser-sync';
-import changed from 'gulp-changed';
+import changed, { compareContents } from 'gulp-changed';
 import cssnano from 'cssnano';
 import dataPkg from 'gulp-data';
 import fg from 'fast-glob';
@@ -30,6 +30,19 @@ import sourcemapsPkg from 'gulp-sourcemaps';
 import svgSprite from 'gulp-svg-sprite';
 import twigPkg from 'gulp-twig';
 import { deleteAsync } from 'del';
+import { Transform } from 'node:stream';
+
+const touch = () =>
+  new Transform({
+    objectMode: true,
+    transform(file, enc, cb) {
+      if (file.stat) {
+        // eslint-disable-next-line no-param-reassign
+        file.stat.mtime = new Date();
+      }
+      cb(null, file);
+    },
+  });
 
 const removeCssComments = () => ({
   postcssPlugin: 'remove-css-comments',
@@ -72,13 +85,6 @@ const paths = {
   src: 'src',
   dist: 'dist',
   public: 'public',
-  templates: {
-    base: 'src/templates',
-    pagesBase: 'src/templates/pages',
-    pages: 'src/templates/pages/**/*.twig',
-    watch: 'src/templates/**/*.{twig,json}',
-    data: 'src/templates/data',
-  },
   css: {
     entries: [
       'src/css/**/*.{scss,css}',
@@ -94,6 +100,31 @@ const paths = {
     watch: 'src/js/**/*.js',
     outDev: 'public/projects/most/js',
     outProd: 'public/projects/most/js',
+  },
+  twig: {
+    base: 'src/templates',
+    pagesBase: 'src/templates/pages',
+    pages: 'src/templates/pages/**/*.twig',
+    watch: 'src/templates/**/*.{twig,json}',
+    data: 'src/templates/data',
+  },
+  spaghettiTwig: {
+    src: 'src/twig/*.twig',
+    dest: 'public/projects/most/twig',
+  },
+  tpl: {
+    src: [
+      'src/templates/data/search.json',
+      'src/templates/*.tpl',
+      '!src/templates/*~.tpl',
+    ],
+    base: 'src/templates',
+    dest: 'public/projects/most/templates',
+    watch: ['src/templates/*.tpl', 'src/templates/data/search.json'],
+  },
+  engine: {
+    src: 'src/engine/*.class.php',
+    dest: 'public/projects/most/engine',
   },
   icons: {
     src: 'src/icons/sprite/**/*.svg',
@@ -118,19 +149,9 @@ const paths = {
     base: 'dev-core',
     outDev: 'dist',
   },
-  templateAssets: {
-    src: [
-      'src/templates/data/search.json',
-      'src/templates/*.tpl',
-      '!src/templates/*~.tpl',
-    ],
-    base: 'src/templates',
-    dest: 'public/projects/most/templates',
-    watch: ['src/templates/*.tpl', 'src/templates/data/search.json'],
-  },
-  engine: {
-    src: 'src/engine/*.class.php',
-    dest: 'public/projects/most/engine',
+  l10n: {
+    src: 'src/translate/**/*',
+    dest: 'public/projects/most/translate',
   },
 };
 
@@ -151,7 +172,7 @@ function readJSONSafe(file) {
 function gatherData(filePath) {
   const slug = path.basename(filePath, path.extname(filePath));
 
-  const dataRoot = paths.templates.data;
+  const dataRoot = paths.twig.data;
   const hasDataDir = fs.existsSync(dataRoot);
   const sharedDataEntries = hasDataDir
     ? fg.sync(['**/*.json', '!pages/**/*.json'], { cwd: dataRoot })
@@ -445,6 +466,7 @@ function isScss(file) {
 function stylesDev() {
   return src(paths.css.entries, { allowEmpty: true, base: 'src/css' })
     .pipe(handleErrors('styles:dev'))
+    .pipe(changed(paths.css.outDev, { hasChanged: compareContents }))
     .pipe(gulpIf(isScss, sourcemaps.init()))
     .pipe(gulpIf(isScss, sass.sync().on('error', sass.logError)))
     .pipe(
@@ -452,13 +474,43 @@ function stylesDev() {
         postcssImport(),
         postcssCustomMedia(),
         postcssNesting(),
-        postcssPresetEnv({ stage: 2 }),
-        postcssPxToRem({ rootValue: 16, propList: ['*'], mediaQuery: false }),
+        postcssPresetEnv({
+          stage: 2,
+          features: {
+            'custom-properties': false,
+            'is-pseudo-class': false,
+            'cascade-layers': false,
+            'case-insensitive-attributes': false,
+          },
+        }),
+        postcssPxToRem({
+          rootValue: 16,
+          propList: [
+            'font',
+            'font-size',
+            'line-height',
+            'letter-spacing',
+            'word-spacing',
+            'margin*',
+            'padding*',
+            '--font-size*',
+            '--letter-spacing*',
+            '--padding-top*',
+            '--padding-bottom*',
+            '--size*',
+            '!--font-size-doc',
+          ],
+          selectorBlackList: [],
+          exclude: null,
+          mediaQuery: false,
+          minPixelValue: 0,
+        }),
         removeCssComments(),
         autoprefixer(),
       ])
     )
     .pipe(gulpIf(isScss, sourcemaps.write('.')))
+    .pipe(touch())
     .pipe(dest(paths.css.outDev))
     .pipe(gulpSize({ title: 'css' }))
     .pipe(bs.stream({ match: '**/*.css' }));
@@ -688,12 +740,12 @@ const twigFunctions = [
 ];
 
 function pagesDev() {
-  return src(paths.templates.pages, { base: paths.templates.pagesBase })
+  return src(paths.twig.pages, { base: paths.twig.pagesBase })
     .pipe(handleErrors('pages:dev'))
     .pipe(data((file) => gatherData(file.path)))
     .pipe(
       twig({
-        base: paths.templates.base,
+        base: paths.twig.base,
         filters: twigFilters,
         functions: twigFunctions,
       })
@@ -704,12 +756,12 @@ function pagesDev() {
 }
 
 function pagesProd() {
-  return src(paths.templates.pages, { base: paths.templates.pagesBase })
+  return src(paths.twig.pages, { base: paths.twig.pagesBase })
     .pipe(handleErrors('pages:prod'))
     .pipe(data((file) => gatherData(file.path)))
     .pipe(
       twig({
-        base: paths.templates.base,
+        base: paths.twig.base,
         filters: twigFilters,
         functions: twigFunctions,
       })
@@ -722,20 +774,34 @@ function copyHtmlToPublic() {
   return src(path.join(paths.dist, '**/*.html')).pipe(dest(paths.public));
 }
 
-function copyTemplateAssets() {
-  return src(paths.templateAssets.src, {
-    base: paths.templateAssets.base,
+function copyTpl() {
+  return src(paths.tpl.src, {
+    base: paths.tpl.base,
     allowEmpty: true,
   })
     .pipe(handleErrors('templates:static'))
-    .pipe(dest(paths.templateAssets.dest));
+    .pipe(dest(paths.tpl.dest));
 }
 
 // Engine
 function copyEngine() {
   return src(paths.engine.src, { encoding: false })
-    .pipe(changed(paths.engine.dest))
+    .pipe(changed(paths.engine.dest, { hasChanged: compareContents }))
     .pipe(dest(paths.engine.dest));
+}
+
+// Spaghetti Twig
+function copyTwig() {
+  return src(paths.spaghettiTwig.src, { encoding: false })
+    .pipe(changed(paths.spaghettiTwig.dest, { hasChanged: compareContents }))
+    .pipe(dest(paths.spaghettiTwig.dest));
+}
+
+// Переводы
+function copyLocales() {
+  return src(paths.l10n.src, { encoding: false })
+    .pipe(changed(paths.l10n.dest))
+    .pipe(dest(paths.l10n.dest));
 }
 
 // #endregion
@@ -760,15 +826,17 @@ function serve(done) {
     port: 9000,
   });
 
-  watch(paths.templates.watch, pagesDev);
+  watch(paths.twig.watch, pagesDev);
   watch(paths.css.watch, stylesDev);
   watch(paths.js.watch, scriptsDev);
   watch(paths.icons.src, icons);
   watch(paths.images.src, images);
   watch(paths.placeholders.src, copyPlaceholders);
   watch(paths.core.src, copyCoreAssets);
-  watch(paths.templateAssets.watch, copyTemplateAssets);
+  watch(paths.tpl.watch, copyTpl);
   watch(paths.engine.src, series(copyEngine));
+  watch(paths.spaghettiTwig.src, series(copyTwig));
+  watch(paths.l10n.src, series(copyLocales));
 
   done();
 }
@@ -785,18 +853,20 @@ function setProdMode(done) {
 // #region: ✅ TASKS
 // -----------------------------------------------------------------------------
 
+const copy = parallel(
+  copyCoreAssets,
+  copyEngine,
+  copyHtmlToPublic,
+  copyLocales,
+  copyPlaceholders,
+  copyTpl,
+  copyTwig
+);
+
 const dev = series(
   cleanDist,
-  parallel(
-    stylesDev,
-    scriptsDev,
-    icons,
-    images,
-    pagesDev,
-    copyCoreAssets,
-    copyPlaceholders,
-    copyTemplateAssets
-  ),
+  parallel(stylesDev, scriptsDev, icons, images, pagesDev),
+  copy,
   serve
 );
 
@@ -811,20 +881,12 @@ const build = series(
     () => images()
   ),
   pagesProd,
-  parallel(copyHtmlToPublic, copyTemplateAssets)
+  copy
 );
 
 const clean = parallel(cleanDist, cleanPublic);
 
-export {
-  build,
-  copyPlaceholders as ph,
-  icons,
-  clean,
-  dev,
-  copyEngine as en,
-  stylesProd as css,
-};
+export { build, copy, icons, clean, dev };
 
 export default dev;
 

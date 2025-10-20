@@ -1,0 +1,199 @@
+{% set lang = lng_html|default('ru')|lower|replace({'-': '_'})|split('_')|first %}
+{% if lang not in ['ru', 'en', 'es', 'de', 'fr', 'it', 'pt'] %}
+  {% set lang = 'ru' %}
+{% endif %}
+
+<link href="/projects/most/css/enhancements.css?v={$engineversion}" rel="stylesheet">
+
+<div id="p_prldr">
+  <div class="contpre">
+    <img src="/projects/most/images/logo-square.png" style="width:81px;height:81px;border-radius:50%" class="spinner" alt=""/>
+    <br/>
+    <small>loading...</small>
+  </div>
+</div>
+<script>
+  (function () {
+    const preloader = document.getElementById('p_prldr');
+    const getOverlay = () => document.getElementById('w-nav-overlay-0');
+    const getMenu = () => document.querySelector('[data-nav-menu-open]');
+    const getSandwichButton = () => document.getElementById('sandwichbutton');
+    const getNavOverlayForm = () => document.querySelector('.nav-overlay-form');
+
+    const hidePreloader = () => {
+      if (! preloader || preloader.style.display === 'none') {
+        return;
+      }
+      preloader.style.opacity = '0';
+      setTimeout(() => {
+        preloader.style.display = 'none';
+      }, 300);
+    };
+
+    const showOverlay = () => {
+      const overlay = getOverlay();
+      if (overlay) {
+        overlay.style.display = 'block';
+      }
+      document.body.style.overflow = 'hidden';
+    };
+
+    const hideOverlay = () => {
+      const overlay = getOverlay();
+      if (overlay) {
+        overlay.style.display = 'none';
+      }
+      document.body.style.overflow = '';
+    };
+
+    window.sandwich = function (act) {
+      const menu = getMenu();
+      if (! menu) {
+        return;
+      }
+
+      if (typeof act === 'undefined') {
+        const isHidden = getComputedStyle(menu).display === 'none';
+        if (isHidden) {
+          menu.style.setProperty('display', 'block', 'important');
+          showOverlay();
+        } else {
+          menu.style.setProperty('display', 'none', 'important');
+          hideOverlay();
+        }
+      } else if (act === 'close') {
+        menu.style.setProperty('display', 'none', 'important');
+        hideOverlay();
+      }
+    };
+
+    const handleOutsideClick = (event) => {
+      const menu = getMenu();
+      const target = event.target;
+      if (! menu) {
+        return;
+      }
+      const sandwichButton = getSandwichButton();
+      const navOverlayForm = getNavOverlayForm();
+      if (! menu.contains(target) && !(navOverlayForm && navOverlayForm.contains(target)) && !(sandwichButton && sandwichButton.contains(target))) {
+        window.sandwich('close');
+      }
+    };
+
+    const onLoad = () => {
+      hideOverlay();
+      hidePreloader();
+
+      const bgVideo = document.getElementById('bgvideo');
+      if (bgVideo) {
+        const loadSrc = bgVideo.getAttribute('loadsrc');
+        if (loadSrc) {
+          bgVideo.src = loadSrc;
+        }
+      }
+
+      document.addEventListener('click', handleOutsideClick);
+      window.addEventListener('resize', () => window.sandwich('close'));
+    };
+
+    window.setTimeout(hidePreloader, 4500);
+
+    if (document.readyState === 'complete') {
+      onLoad();
+    } else {
+      window.addEventListener('load', onLoad);
+    }
+  })();
+</script>
+
+{$antiframe}
+{$pushstatejs}
+
+<div class="navigation w-nav site-header" data-collapse="medium" data-animation="default" data-duration="400" data-easing="ease" data-easing2="ease" role="banner">
+  <div class="navigation-container site-header-inner">
+    <a href="" class="logo w-inline-block site-header-logo">
+      <img src="{$logofile}" alt="" class="image-logo site-header-logo-image"/>
+    </a>
+    <nav role="navigation" class="nav-menu w-nav-menu site-header-nav">
+      {# Tablet+ Nav #}
+      {% set nav_links = [
+        {href: '/category/politics', text: 'Politics', class: 'navigation-link'},
+        {href: '/category/conflicts', text: 'Conflicts', class: 'navigation-link'},
+        {href: '/category/economy', text: 'Economy', class: 'navigation-link'},
+        {href: '/category/opinions', text: 'Opinions', class: 'navigation-link'},
+        {href: '/category/culture', text: 'Culture', class: 'navigation-link'},
+        {href: '/special-projects', text: 'Special projects', class: 'navigation-link'},
+        {href: '/support', text: 'Support us', class: 'navigation-link-subscribe'}
+      ] %}
+      {% for link in nav_links %}
+        {% if link.href|slice(0, 10) == '/category/' %}
+          {# делаем относительный href без ведущего слеша #}
+          {% set href_rel = link.href|slice(0, 1) == '/' ? link.href|slice(1) : link.href %}
+
+          <a href="{{ href_rel }}" class="navigation-link w-inline-block">
+            <div class="navigation-link-text">{{ link.text|trans }}</div>
+            <div class="navigation-hover"></div>
+          </a>
+        {% endif %}
+      {% endfor %}
+
+      <button class="button button-icon button-ghost site-header-search" data-search-toggle aria-haspopup="dialog" aria-controls="search-modal" aria-expanded="false" aria-label="{{ 'Search'|trans }}">
+        {% include 'icon.twig' with {name: 'search'} %}
+      </button>
+
+      <a href="support" class="navigation-link-subscribe w-inline-block site-header-cta">
+        <div class="navigation-link-text-subscribe visible-lg">Support us</div>
+      </a>
+    </nav>
+
+    {# Hamburger button #}
+    <div class="navigation-actions site-header-actions">
+      <div id="sandwichbutton" class="menu-button w-nav-button" onclick="sandwich()">
+        <div class="icon-200 w-icon-nav-menu"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="w-nav-overlay" data-wf-ignore id="w-nav-overlay-0" style="height: 100%; display: none;">
+  <div class="nav-overlay">
+    <form class="nav-overlay-form" action="/search" data-search-form role="search" method="get">
+      <input class="nav-overlay-input" name="q" type="search" data-search-input placeholder="{{ 'Search...'|trans }}" autocomplete="off"/>
+      <button class="nav-overlay-submit button button-icon button-ghost" type="submit" aria-label="{{ 'Submit search'|trans }}">
+        {% include 'icon.twig' with {name: 'search'} %}
+      </button>
+    </form>
+
+    {# Mobile Nav #}
+    <nav role="navigation" class="nav-menu w-nav-menu" style="transition: all, transform 400ms; transform: translateY(0px) translateX(0px);" data-nav-menu-open>
+      {% for link in nav_links %}
+        <a href="{{ link.href }}" class="{{ link.class }} w-inline-block">
+          <div class="{{ link.class }}-text">
+            {{ link.text|trans }}
+          </div>
+        </a>
+      {% endfor %}
+    </nav>
+  </div>
+</div>
+
+<section class="search-modal" id="search-modal" data-search-modal data-search-results="/search" data-search-param="q" role="dialog" aria-modal="true" aria-labelledby="search-modal-title" aria-hidden="true" data-search-suggestions='{$searchjson}'>
+  <div class="search-modal-backdrop" data-search-dismiss></div>
+  <div class="search-modal-content" role="document">
+    <form class="search-modal-form" action="/search" data-search-form role="search" method="get">
+      <label class="visually-hidden" for="search-query">
+        {{ 'Search mostmedia.org'|trans }}
+      </label>
+      <input class="search-modal-input" id="search-query" name="q" type="search" data-search-input placeholder="{{ 'Search...'|trans }}" autocomplete="off"/>
+      <button class="button button-icon button-ghost search-modal-submit" type="submit" aria-label="{{ 'Submit search'|trans }}">
+        {% include 'icon.twig' with {name: 'search'} %}
+      </button>
+    </form>
+
+    <ul class="search-modal-suggestions" aria-label="{{ 'Popular searches'|trans }}">
+      {# Suggestions are rendered by JavaScript #}
+    </ul>
+  </div>
+</section>
+
+<script src="/projects/most/js/search.js?v={$engineversion}" type="module"></script>

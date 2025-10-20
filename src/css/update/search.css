@@ -105,10 +105,11 @@
 }
 
 .nav-overlay-form {
+
   /* The neighbor below — nav — has a crazy z-index. We need to “beat” it. */
   z-index: 151001;
 
-  @media only screen and (min-width: 768px) and (min-height: 341px) {
+  @media only screen and (width >= 768px) and (height >= 341px) {
     margin-inline: 30px;
   }
 }
@@ -120,7 +121,7 @@
   width: 100%;
   max-width: var(--width-container);
 
-  @media only screen and (min-width: 1260px) and (min-height: 341px) {
+  @media only screen and (width >= 1260px) and (height >= 341px) {
     padding-inline: 0;
   }
 }
@@ -132,8 +133,7 @@
   color: var(--color-text);
   display: flex;
   align-items: center;
-  padding-inline-start: var(--size-8);
-  padding-inline-end: var(--size-2p5);
+  padding-inline: var(--size-8) var(--size-2p5);
   width: 100%;
 
   &:focus {
@@ -183,7 +183,7 @@
 .search-results-submit {
   inset-inline-start: calc(var(--size-1) + 30px);
 
-  @media only screen and (min-width: 1260px) and (min-height: 341px) {
+  @media only screen and (width >= 1260px) and (height >= 341px) {
     inset-inline-start: var(--size-1);
   }
 }
@@ -212,6 +212,10 @@ input[type='search']::-webkit-search-cancel-button {
   }
 }
 
+.search-modal-suggestions:is(:empty, :not(:has(li))) {
+  display: none;
+}
+
 .search-modal-suggestion {
   --button-bg: transparent;
   --button-color: var(--color-text-02);
@@ -221,12 +225,10 @@ input[type='search']::-webkit-search-cancel-button {
 
   justify-content: start;
   letter-spacing: 0;
-  text-align: inline-start;
+  text-align: start;
   width: 100%;
 
   .icon {
     translate: 0 2px;
   }
 }
-
-
